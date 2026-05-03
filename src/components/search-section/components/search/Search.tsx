@@ -3,15 +3,28 @@ import './Search.css';
 import { Component } from 'react';
 
 import loupeIcon from './assets/loupe.svg';
+import type { SearchProps } from './types';
 
-export class Search extends Component {
+export class Search extends Component<SearchProps> {
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { onChange } = this.props;
+    onChange(event.target.value);
+  };
+
+  handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+  };
+
   render() {
+    const { value } = this.props;
+
     return (
-      <form className="search-form">
+      <form className="search-form" onSubmit={this.handleSubmit}>
         <input
           className="search-input"
+          value={value}
+          onChange={this.handleChange}
           type="text"
-          id="search"
           name="search"
           placeholder="Enter search term..."
           aria-label="Search query"
