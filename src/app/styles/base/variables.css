@@ -1,0 +1,13 @@
+:root {
+  --color-text: rgb(3 17 5);
+  --color-background: rgb(242 253 245);
+  --color-primary: rgb(52 218 80);
+  --color-secondary: rgb(144 201 234);
+  --color-accent: rgb(96 124 226);
+  --color-border: rgb(207 208 209);
+  --color-input: rgb(255 255 255);
+
+  --radial-primary-secondary: radial-gradient(#34da50, #90c9ea);
+
+  --font-primary: 'Montserrat', sans-serif;
+}

@@ -1,0 +1,22 @@
+.search {
+  margin: 0 auto;
+  padding-block: 50px;
+}
+
+.search-title {
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.search-gradient {
+  display: inline-block;
+
+  font-size: 36px;
+  color: transparent;
+
+  background-image: var(--radial-primary-secondary);
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}

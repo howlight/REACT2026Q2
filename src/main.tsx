@@ -1,1 +1,16 @@
-console.log('hello');
+import './app/styles/main.css';
+
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import { App } from './app/App.tsx';
+
+const root = document.querySelector('#root');
+
+if (!root) throw new Error('Root container not found');
+
+createRoot(root).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
