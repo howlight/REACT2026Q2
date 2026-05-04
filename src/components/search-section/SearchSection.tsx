@@ -10,7 +10,7 @@ export class SearchSection extends Component<SearchProps> {
     return (
       <section className="search">
         <h2 className="search-title">
-          <span className="search-gradient">Search</span> Items...
+          <span className="search-gradient">Search</span> Characters...
         </h2>
         <Search {...this.props} />
       </section>

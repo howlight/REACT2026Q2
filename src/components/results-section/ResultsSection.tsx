@@ -6,11 +6,23 @@ import type { Character } from '~/api/rick-morty';
 
 type Props = {
   characters: Character[];
+  loading: boolean;
 };
 
 export class ResultsSection extends Component<Props> {
   render() {
-    const { characters } = this.props;
+    const { characters, loading } = this.props;
+
+    if (loading) {
+      return (
+        <section className="results">
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <p className="loading-text">Loading characters...</p>
+          </div>
+        </section>
+      );
+    }
 
     return (
       <section className="results">

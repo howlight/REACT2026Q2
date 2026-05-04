@@ -86,7 +86,7 @@ export class App extends Component<Record<string, never>, AppState> {
           onChange={this.setSearchTerm}
           onSubmit={this.handleSearchSubmit}
         />
-        <ResultsSection characters={this.state.characters} />
+        <ResultsSection characters={this.state.characters} loading={this.state.loading} />
         <ErrorSection />
       </main>
     );
