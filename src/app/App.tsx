@@ -7,6 +7,7 @@ import { SearchSection } from '~/components/search-section';
 
 type AppState = {
   searchTerm: string;
+  lastSearchTerm: string;
   characters: Character[];
   loading: boolean;
   error: null | string;
@@ -15,6 +16,7 @@ type AppState = {
 export class App extends Component<Record<string, never>, AppState> {
   state: AppState = {
     searchTerm: '',
+    lastSearchTerm: '',
     characters: [],
     loading: false,
     error: null,
@@ -27,13 +29,32 @@ export class App extends Component<Record<string, never>, AppState> {
   initializeApp = async () => {
     const savedSearch = localStorage.getItem('search') ?? '';
 
-    this.setState({ searchTerm: savedSearch });
+    this.setState({
+      searchTerm: savedSearch,
+      lastSearchTerm: savedSearch,
+    });
 
     await this.fetchCharacters(savedSearch);
   };
 
   setSearchTerm = (value: string) => {
     this.setState({ searchTerm: value });
+  };
+
+  handleSearchSubmit = () => {
+    const { searchTerm, lastSearchTerm } = this.state;
+    const trimmed = searchTerm.trim();
+
+    if (trimmed === lastSearchTerm) return;
+
+    localStorage.setItem('search', trimmed);
+
+    this.setState({
+      searchTerm: trimmed,
+      lastSearchTerm: trimmed,
+    });
+
+    void this.fetchCharacters(trimmed);
   };
 
   fetchCharacters = async (searchTerm: string) => {
@@ -60,8 +81,12 @@ export class App extends Component<Record<string, never>, AppState> {
   render() {
     return (
       <main className="main container">
-        <SearchSection value={this.state.searchTerm} onChange={this.setSearchTerm} />
-        <ResultsSection />
+        <SearchSection
+          value={this.state.searchTerm}
+          onChange={this.setSearchTerm}
+          onSubmit={this.handleSearchSubmit}
+        />
+        <ResultsSection characters={this.state.characters} />
         <ErrorSection />
       </main>
     );

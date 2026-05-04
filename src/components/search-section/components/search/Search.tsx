@@ -7,12 +7,12 @@ import type { SearchProps } from './types';
 
 export class Search extends Component<SearchProps> {
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { onChange } = this.props;
-    onChange(event.target.value);
+    this.props.onChange(event.target.value);
   };
 
   handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    this.props.onSubmit();
   };
 
   render() {

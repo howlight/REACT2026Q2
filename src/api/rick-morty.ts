@@ -6,6 +6,7 @@ export type Character = {
   name: string;
   status: string;
   species: string;
+  image: string;
 };
 
 const isApiResponse = (data: unknown): data is { results: unknown } =>
