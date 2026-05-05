@@ -68,7 +68,7 @@ export class App extends Component<Record<string, never>, AppState> {
         loading: false,
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to load characters';
+      const errorMessage = error instanceof Error ? error.message : 'Something went wrong';
 
       this.setState({
         characters: [],
@@ -79,14 +79,16 @@ export class App extends Component<Record<string, never>, AppState> {
   };
 
   render() {
+    const { searchTerm, characters, loading, error } = this.state;
+
     return (
       <main className="main container">
         <SearchSection
-          value={this.state.searchTerm}
+          value={searchTerm}
           onChange={this.setSearchTerm}
           onSubmit={this.handleSearchSubmit}
         />
-        <ResultsSection characters={this.state.characters} loading={this.state.loading} />
+        <ResultsSection characters={characters} loading={loading} error={error} />
         <ErrorSection />
       </main>
     );

@@ -7,11 +7,12 @@ import type { Character } from '~/api/rick-morty';
 type Props = {
   characters: Character[];
   loading: boolean;
+  error: string | null;
 };
 
 export class ResultsSection extends Component<Props> {
   render() {
-    const { characters, loading } = this.props;
+    const { characters, loading, error } = this.props;
 
     if (loading) {
       return (
@@ -20,6 +21,25 @@ export class ResultsSection extends Component<Props> {
             <div className="spinner"></div>
             <p className="loading-text">Loading characters...</p>
           </div>
+        </section>
+      );
+    }
+
+    if (error) {
+      return (
+        <section className="results">
+          <div className="error-container">
+            <div className="error-icon">❗</div>
+            <p className="error-message">{error}</p>
+          </div>
+        </section>
+      );
+    }
+
+    if (characters.length === 0) {
+      return (
+        <section className="results">
+          <p className="no-results">No results found for your search.</p>
         </section>
       );
     }
