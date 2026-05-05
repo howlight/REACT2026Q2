@@ -15,12 +15,18 @@
   --color-danger-bg: rgb(248 215 218);
   --color-danger-text: rgb(114 28 36);
   --color-neutral-bg: rgb(226 227 229);
+  --color-neutral-bg-30: rgb(226 227 229 / 0.3);
   --color-neutral-text: rgb(56 61 65);
+  --color-error-bg: rgb(220 53 69);
+  --color-error-bg-hover: rgb(200 35 51);
+  --color-error-text: rgb(220 53 69);
 
   --radial-primary-secondary: radial-gradient(#34da50, #90c9ea);
 
   --shadow-card: 0 4px 12px rgb(0 0 0 / 0.1);
   --shadow-card-hover: 0 8px 24px rgb(0 0 0 / 0.15);
+  --shadow-button: 0 2px 8px rgb(0 0 0 / 0.2);
+  --shadow-button-hover: 0 4px 12px rgb(0 0 0 / 0.3);
 
   --font-primary: 'Montserrat', sans-serif;
 }

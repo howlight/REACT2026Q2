@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
 import { type Character, getCharacters } from '~/api/rick-morty';
-import { ErrorSection } from '~/components/error-section';
+import { ErrorTestButton } from '~/components/error-test-button';
 import { ResultsSection } from '~/components/results-section';
 import { SearchSection } from '~/components/search-section';
 
@@ -89,7 +89,7 @@ export class App extends Component<Record<string, never>, AppState> {
           onSubmit={this.handleSearchSubmit}
         />
         <ResultsSection characters={characters} loading={loading} error={error} />
-        <ErrorSection />
+        <ErrorTestButton />
       </main>
     );
   }
