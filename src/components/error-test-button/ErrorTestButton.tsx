@@ -11,7 +11,7 @@ export class ErrorTestButton extends Component<Record<string, never>, State> {
     shouldThrowError: false,
   };
 
-  handleTestError = (): void => {
+  private handleTestError = (): void => {
     this.setState({ shouldThrowError: true });
   };
 

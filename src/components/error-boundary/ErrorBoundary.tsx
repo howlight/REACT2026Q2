@@ -28,7 +28,7 @@ export class ErrorBoundary extends Component<Props, State> {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
   }
 
-  handleReset = (): void => {
+  private handleReset = (): void => {
     this.setState({
       hasError: false,
       error: null,

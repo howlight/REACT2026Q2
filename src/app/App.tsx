@@ -26,7 +26,7 @@ export class App extends Component<Record<string, never>, AppState> {
     void this.initializeApp();
   }
 
-  initializeApp = async () => {
+  private initializeApp = async () => {
     const savedSearch = localStorage.getItem('search') ?? '';
 
     this.setState({
@@ -37,11 +37,11 @@ export class App extends Component<Record<string, never>, AppState> {
     await this.fetchCharacters(savedSearch);
   };
 
-  setSearchTerm = (value: string) => {
+  private setSearchTerm = (value: string) => {
     this.setState({ searchTerm: value });
   };
 
-  handleSearchSubmit = () => {
+  private handleSearchSubmit = () => {
     const { searchTerm, lastSearchTerm } = this.state;
     const trimmed = searchTerm.trim();
 
@@ -57,7 +57,7 @@ export class App extends Component<Record<string, never>, AppState> {
     void this.fetchCharacters(trimmed);
   };
 
-  fetchCharacters = async (searchTerm: string) => {
+  private fetchCharacters = async (searchTerm: string) => {
     this.setState({ loading: true, error: null });
 
     try {
