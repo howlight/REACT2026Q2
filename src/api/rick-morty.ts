@@ -14,7 +14,7 @@ const isApiResponse = (data: unknown): data is { results: unknown } =>
   data !== null && typeof data === 'object' && 'results' in data;
 
 const isCharacterArray = (data: unknown): data is Character[] =>
-  Array.isArray(data) && data.length > 0 && 'id' in data[0] && 'name' in data[0];
+  Array.isArray(data) && 'id' in data[0] && 'name' in data[0];
 
 export const getCharacters = async (searchTerm: string): Promise<Character[]> => {
   const url = searchTerm
