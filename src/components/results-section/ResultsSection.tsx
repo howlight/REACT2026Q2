@@ -6,7 +6,7 @@ import type { Character } from '~/api/rick-morty.types';
 
 import { CharacterCard } from './components/character-card';
 
-type Props = {
+export type Props = {
   characters: Character[];
   loading: boolean;
   error: string | null;
@@ -20,7 +20,7 @@ export class ResultsSection extends Component<Props> {
       return (
         <section className="results">
           <div className="loading-container">
-            <div className="spinner"></div>
+            <div className="spinner" role="status" />
             <p className="loading-text">Loading characters...</p>
           </div>
         </section>

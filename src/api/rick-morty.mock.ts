@@ -8,6 +8,8 @@ export const mockCharacter: Character = {
   image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
 } as const;
 
+export const mockCharacters: Character[] = [mockCharacter];
+
 export const mockResponse: ApiResponse = {
   results: [mockCharacter],
 } as const;
