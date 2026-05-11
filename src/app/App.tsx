@@ -1,6 +1,7 @@
 import { Component } from 'react';
 
-import { type Character, getCharacters } from '~/api/rick-morty.api';
+import { getCharacters } from '~/api/rick-morty.api';
+import type { Character } from '~/api/rick-morty.types';
 import { ErrorTestButton } from '~/components/error-test-button';
 import { ResultsSection } from '~/components/results-section';
 import { SearchSection } from '~/components/search-section';
