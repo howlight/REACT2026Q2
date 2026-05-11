@@ -2,7 +2,7 @@ import './ResultsSection.css';
 
 import { Component } from 'react';
 
-import type { Character } from '~/api/rick-morty';
+import type { Character } from '~/api/rick-morty.types';
 
 import { CharacterCard } from './components/character-card';
 
