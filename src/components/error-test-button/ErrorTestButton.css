@@ -1,0 +1,28 @@
+.error-test-button {
+  cursor: pointer;
+
+  position: fixed;
+  z-index: 2;
+  right: 15px;
+  bottom: 15px;
+
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  color: var(--color-surface);
+
+  background-color: var(--color-error-bg);
+  box-shadow: var(--shadow-button);
+
+  transition: all 0.2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .error-test-button:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-error-bg-hover);
+    box-shadow: var(--shadow-button-hover);
+  }
+}
