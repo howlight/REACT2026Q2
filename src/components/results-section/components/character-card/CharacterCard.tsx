@@ -2,7 +2,7 @@ import './CharacterCard.css';
 
 import { Component } from 'react';
 
-import type { Character } from '~/api/rick-morty';
+import type { Character } from '~/api/rick-morty.types';
 
 type Props = Omit<Character, 'id'>;
 
