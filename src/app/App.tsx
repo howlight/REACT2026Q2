@@ -7,9 +7,10 @@ import type { Character } from '~/api/rick-morty.types';
 import { ErrorTestButton } from '~/components/error-test-button';
 import { ResultsSection } from '~/components/results-section';
 import { SearchSection } from '~/components/search-section';
+import { useLocalStorage } from '~/hooks/useLocalStorage';
 
 export const App = () => {
-  const [searchTerm, setSearchTerm] = useState(() => localStorage.getItem('search') ?? '');
+  const [searchTerm, setSearchTerm] = useLocalStorage('search', '');
   const [lastSearchTerm, setLastSearchTerm] = useState(searchTerm);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(false);
@@ -23,8 +24,6 @@ export const App = () => {
     const trimmed = searchTerm.trim();
 
     if (trimmed === lastSearchTerm) return;
-
-    localStorage.setItem('search', trimmed);
 
     setSearchTerm(trimmed);
     setLastSearchTerm(trimmed);
