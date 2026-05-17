@@ -1,38 +1,34 @@
 import './Search.css';
 
-import { Component } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 import loupeIcon from './assets/loupe.svg';
 import type { SearchProps } from './types';
 
-export class Search extends Component<SearchProps> {
-  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.onChange(event.target.value);
+export const Search = ({ value, onChange, onSubmit }: SearchProps) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange(event.target.value);
   };
 
-  private handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.props.onSubmit();
+    onSubmit();
   };
 
-  render() {
-    const { value } = this.props;
-
-    return (
-      <form className="search-form" onSubmit={this.handleSubmit}>
-        <input
-          className="search-input"
-          value={value}
-          onChange={this.handleChange}
-          type="text"
-          name="search"
-          placeholder="Enter search term..."
-          aria-label="Search query"
-        />
-        <button className="search-button" aria-label="search items" type="submit">
-          <img className="search-icon" src={loupeIcon} alt="search" width="25" height="25" />
-        </button>
-      </form>
-    );
-  }
-}
+  return (
+    <form className="search-form" onSubmit={handleSubmit}>
+      <input
+        className="search-input"
+        value={value}
+        onChange={handleChange}
+        type="text"
+        name="search"
+        placeholder="Enter search term..."
+        aria-label="Search query"
+      />
+      <button className="search-button" aria-label="search items" type="submit">
+        <img className="search-icon" src={loupeIcon} alt="search" width="25" height="25" />
+      </button>
+    </form>
+  );
+};

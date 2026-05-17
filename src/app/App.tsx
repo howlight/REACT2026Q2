@@ -1,4 +1,6 @@
-import { Component } from 'react';
+import './App.css';
+
+import { useEffect, useState } from 'react';
 
 import { getCharacters } from '~/api/rick-morty.api';
 import type { Character } from '~/api/rick-morty.types';
@@ -6,92 +8,53 @@ import { ErrorTestButton } from '~/components/error-test-button';
 import { ResultsSection } from '~/components/results-section';
 import { SearchSection } from '~/components/search-section';
 
-type AppState = {
-  searchTerm: string;
-  lastSearchTerm: string;
-  characters: Character[];
-  loading: boolean;
-  error: null | string;
-};
+export const App = () => {
+  const [searchTerm, setSearchTerm] = useState(() => localStorage.getItem('search') ?? '');
+  const [lastSearchTerm, setLastSearchTerm] = useState(searchTerm);
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-export class App extends Component<Record<string, never>, AppState> {
-  state: AppState = {
-    searchTerm: '',
-    lastSearchTerm: '',
-    characters: [],
-    loading: false,
-    error: null,
-  };
+  useEffect(() => {
+    void fetchCharacters(lastSearchTerm);
+  }, [lastSearchTerm]);
 
-  componentDidMount() {
-    void this.initializeApp();
-  }
-
-  private initializeApp = async () => {
-    const savedSearch = localStorage.getItem('search') ?? '';
-
-    this.setState({
-      searchTerm: savedSearch,
-      lastSearchTerm: savedSearch,
-    });
-
-    await this.fetchCharacters(savedSearch);
-  };
-
-  private setSearchTerm = (value: string) => {
-    this.setState({ searchTerm: value });
-  };
-
-  private handleSearchSubmit = () => {
-    const { searchTerm, lastSearchTerm } = this.state;
+  const handleSearchSubmit = () => {
     const trimmed = searchTerm.trim();
 
     if (trimmed === lastSearchTerm) return;
 
     localStorage.setItem('search', trimmed);
 
-    this.setState({
-      searchTerm: trimmed,
-      lastSearchTerm: trimmed,
-    });
-
-    void this.fetchCharacters(trimmed);
+    setSearchTerm(trimmed);
+    setLastSearchTerm(trimmed);
   };
 
-  private fetchCharacters = async (searchTerm: string) => {
-    this.setState({ loading: true, error: null });
+  const fetchCharacters = async (term: string) => {
+    setLoading(true);
+    setError(null);
 
     try {
-      const characters = await getCharacters(searchTerm);
+      const characters = await getCharacters(term);
 
-      this.setState({
-        characters,
-        loading: false,
-      });
+      setCharacters(characters);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Something went wrong';
 
-      this.setState({
-        characters: [],
-        error: errorMessage,
-        loading: false,
-      });
+      setCharacters([]);
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
-  render() {
-    const { searchTerm, characters, loading, error } = this.state;
+  return (
+    <main className="main container">
+      <SearchSection value={searchTerm} onChange={setSearchTerm} onSubmit={handleSearchSubmit} />
 
-    return (
-      <main className="main container">
-        <SearchSection
-          value={searchTerm}
-          onChange={this.setSearchTerm}
-          onSubmit={this.handleSearchSubmit}
-        />
-        <ResultsSection characters={characters} loading={loading} error={error} />
-        <ErrorTestButton />
-      </main>
-    );
-  }
-}
+      <ResultsSection characters={characters} loading={loading} error={error} />
+
+      <ErrorTestButton />
+    </main>
+  );
+};
