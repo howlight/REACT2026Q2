@@ -1,8 +1,9 @@
 import { describe, expect, test, vi } from 'vitest';
 
-import { getCharacters } from './rick-morty.api';
+import { getCharacterById, getCharacters } from './rick-morty.api';
 import { API_URLS, ERROR_MESSAGES, TERMS } from './rick-morty.constants';
 import {
+  mockCharacter,
   mockCharactersResponse,
   mockEmptyCharactersResponse,
   mockEmptyResponse,
@@ -133,5 +134,28 @@ describe('getCharacters', () => {
     });
 
     await expect(getCharacters(TERMS.VALID)).rejects.toThrow(ERROR_MESSAGES.INVALID_DATA);
+  });
+});
+
+describe('getCharacterById', () => {
+  test('should return character on successful request', async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(mockCharacter),
+    });
+
+    const result = await getCharacterById(1);
+    expect(result).toEqual(mockCharacter);
+  });
+
+  test('should throw error on failed request', async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 404,
+    });
+
+    await expect(getCharacterById(999)).rejects.toThrow(
+      'Failed to load characters, status code: 404',
+    );
   });
 });
