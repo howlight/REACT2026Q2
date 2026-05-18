@@ -1,6 +1,7 @@
 import './MainPage.css';
 
 import { useEffect, useState } from 'react';
+import { Outlet, useMatch } from 'react-router';
 
 import { getCharacters } from '~/api/rick-morty.api';
 import type { Character } from '~/api/rick-morty.types';
@@ -18,6 +19,7 @@ export const MainPage = () => {
   const [error, setError] = useState<string | null>(null);
   const { currentPage, setPage, resetPage } = usePaginationParams();
   const [totalPages, setTotalPages] = useState(1);
+  const isDetailsOpened = useMatch('/details/:characterId');
 
   useEffect(() => {
     void fetchCharacters(lastSearchTerm, currentPage);
@@ -59,18 +61,25 @@ export const MainPage = () => {
   };
 
   return (
-    <div className="main-page">
-      <SearchSection value={searchTerm} onChange={setSearchTerm} onSubmit={handleSearchSubmit} />
+    <div className={`main-page-layout ${isDetailsOpened ? 'main-page-layout--split' : ''}`}>
+      <div className="main-page">
+        <SearchSection value={searchTerm} onChange={setSearchTerm} onSubmit={handleSearchSubmit} />
 
-      {characters.length > 0 && !loading && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+        {characters.length > 0 && !loading && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
+
+        <ResultsSection characters={characters} loading={loading} error={error} />
+      </div>
+      {isDetailsOpened && (
+        <div className="details-wrapper">
+          <Outlet />
+        </div>
       )}
-
-      <ResultsSection characters={characters} loading={loading} error={error} />
     </div>
   );
 };

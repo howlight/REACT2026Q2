@@ -1,5 +1,10 @@
 import { API_URLS, ERROR_MESSAGES } from './rick-morty.constants';
-import { type CharactersResponse, isApiResponse } from './rick-morty.types';
+import {
+  type Character,
+  type CharactersResponse,
+  isApiResponse,
+  isCharacter,
+} from './rick-morty.types';
 
 export const getCharacters = async (searchTerm: string, page = 1): Promise<CharactersResponse> => {
   const url = searchTerm
@@ -29,6 +34,23 @@ export const getCharacters = async (searchTerm: string, page = 1): Promise<Chara
       characters: data.results,
       totalPages: data.info.pages,
     };
+  }
+
+  throw new Error(ERROR_MESSAGES.INVALID_DATA);
+};
+
+export const getCharacterById = async (id: number): Promise<Character> => {
+  const url = `${API_URLS.CHARACTERS_ENDPOINT}/${id}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(ERROR_MESSAGES.httpError(response.status));
+  }
+
+  const data: unknown = await response.json();
+
+  if (isCharacter(data)) {
+    return data;
   }
 
   throw new Error(ERROR_MESSAGES.INVALID_DATA);
