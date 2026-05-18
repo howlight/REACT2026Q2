@@ -4,7 +4,7 @@
 
   overflow-y: auto;
 
-  height: fit-content;
+  height: 100%;
   max-height: calc(100vh - 100px);
   padding: 20px;
   border-radius: 16px;
