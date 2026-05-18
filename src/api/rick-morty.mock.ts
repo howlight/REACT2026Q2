@@ -1,4 +1,4 @@
-import { type ApiResponse, type Character } from './rick-morty.types';
+import type { ApiResponse, Character, CharactersResponse } from './rick-morty.types';
 
 export const mockCharacter: Character = {
   id: 1,
@@ -6,10 +6,30 @@ export const mockCharacter: Character = {
   status: 'Alive',
   species: 'Human',
   image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-} as const;
+};
 
 export const mockCharacters: Character[] = [mockCharacter];
 
 export const mockResponse: ApiResponse = {
+  info: {
+    pages: 10,
+  },
   results: [mockCharacter],
-} as const;
+};
+
+export const mockEmptyResponse: ApiResponse = {
+  info: {
+    pages: 0,
+  },
+  results: [],
+};
+
+export const mockCharactersResponse: CharactersResponse = {
+  characters: [mockCharacter],
+  totalPages: mockResponse.info.pages,
+};
+
+export const mockEmptyCharactersResponse: CharactersResponse = {
+  characters: [],
+  totalPages: 0,
+};

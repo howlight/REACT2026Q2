@@ -1,6 +1,9 @@
 export const API_URLS = {
   CHARACTERS_ENDPOINT: 'https://rickandmortyapi.com/api/character',
-  SEARCH_QUERY: '?name=',
+  PARAM_KEYS: {
+    PAGE: 'page',
+    NAME: 'name',
+  },
 } as const;
 
 export const TERMS = {

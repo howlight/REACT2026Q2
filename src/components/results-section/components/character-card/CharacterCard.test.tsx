@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { describe, expect, test } from 'vitest';
 
 import { mockCharacter } from '~/api/rick-morty.mock';
@@ -6,7 +7,11 @@ import { mockCharacter } from '~/api/rick-morty.mock';
 import { CharacterCard } from './CharacterCard';
 
 const renderCharacterCard = (character = mockCharacter) => {
-  render(<CharacterCard {...character} />);
+  render(
+    <MemoryRouter>
+      <CharacterCard {...character} />
+    </MemoryRouter>,
+  );
 };
 
 describe('CharacterCard', () => {

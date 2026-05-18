@@ -1,50 +1,53 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { getCharacters } from '~/api/rick-morty.api';
-import { mockCharacters } from '~/api/rick-morty.mock';
+import { mockCharactersResponse } from '~/api/rick-morty.mock';
 
-import { App } from './App';
+import { MainPage } from './MainPage';
 
 vi.mock('~/api/rick-morty.api');
-vi.mock('~/components/error-test-button', () => ({
-  ErrorTestButton: () => <button>Test Error Boundary</button>,
-}));
 
 const mockGetCharacters = vi.mocked(getCharacters);
 
-describe('App', () => {
+const renderMainPage = () => {
+  render(
+    <MemoryRouter>
+      <MainPage />
+    </MemoryRouter>,
+  );
+};
+
+describe('MainPage', () => {
   beforeEach(() => {
-    mockGetCharacters.mockResolvedValue(mockCharacters);
+    mockGetCharacters.mockResolvedValue(mockCharactersResponse);
   });
 
   describe('initialization', () => {
     it('should render main sections', async () => {
-      render(<App />);
+      renderMainPage();
 
-      expect(screen.getByRole('main')).toBeInTheDocument();
       expect(screen.getByRole('textbox')).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /test error boundary/i })).toBeInTheDocument();
 
       await waitFor(() => expect(mockGetCharacters).toHaveBeenCalledTimes(1));
     });
 
     it('should call getCharacters with empty string on mount when localStorage is empty', async () => {
-      render(<App />);
+      renderMainPage();
 
       await waitFor(() => {
-        expect(mockGetCharacters).toHaveBeenCalledWith('');
+        expect(mockGetCharacters).toHaveBeenCalledWith('', 1);
       });
     });
 
     it('should use saved search term from localStorage on mount', async () => {
       localStorage.setItem('search', 'Rick');
-
-      render(<App />);
+      renderMainPage();
 
       await waitFor(() => {
-        expect(mockGetCharacters).toHaveBeenCalledWith('Rick');
+        expect(mockGetCharacters).toHaveBeenCalledWith('Rick', 1);
       });
 
       expect(screen.getByRole('textbox')).toHaveValue('Rick');
@@ -54,7 +57,7 @@ describe('App', () => {
   describe('search', () => {
     it('should perform search on form submit', async () => {
       const user = userEvent.setup();
-      render(<App />);
+      renderMainPage();
 
       await waitFor(() => expect(mockGetCharacters).toHaveBeenCalledTimes(1));
 
@@ -66,13 +69,13 @@ describe('App', () => {
       await user.click(submitButton);
 
       await waitFor(() => {
-        expect(mockGetCharacters).toHaveBeenCalledWith('Morty');
+        expect(mockGetCharacters).toHaveBeenCalledWith('Morty', 1);
       });
     });
 
     it('should save trimmed search term to localStorage on submit', async () => {
       const user = userEvent.setup();
-      render(<App />);
+      renderMainPage();
 
       await waitFor(() => expect(mockGetCharacters).toHaveBeenCalledTimes(1));
 
@@ -92,8 +95,9 @@ describe('App', () => {
     it('should not call getCharacters again if search term unchanged', async () => {
       const user = userEvent.setup();
       localStorage.setItem('search', 'Rick');
+      mockGetCharacters.mockResolvedValue(mockCharactersResponse);
 
-      render(<App />);
+      renderMainPage();
 
       await waitFor(() => expect(mockGetCharacters).toHaveBeenCalledTimes(1));
 
@@ -112,7 +116,7 @@ describe('App', () => {
     it('should display error message on failed request', async () => {
       mockGetCharacters.mockRejectedValueOnce(new Error('Server error'));
 
-      render(<App />);
+      renderMainPage();
 
       await waitFor(() => {
         expect(screen.getByText('Server error')).toBeInTheDocument();

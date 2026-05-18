@@ -1,16 +1,17 @@
 import './CharacterCard.css';
 
-import { Component } from 'react';
+import { Link, useSearchParams } from 'react-router';
 
 import type { Character } from '~/api/rick-morty.types';
 
-type Props = Omit<Character, 'id'>;
+type Props = Character;
 
-export class CharacterCard extends Component<Props> {
-  render() {
-    const { name, image, status, species } = this.props;
+export const CharacterCard = ({ id, name, image, status, species }: Props) => {
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get('page') ?? '1';
 
-    return (
+  return (
+    <Link to={`/details/${id}?page=${currentPage}`}>
       <article className="character-card">
         <img src={image} alt={name} className="character-image" loading="lazy" />
         <div className="character-info">
@@ -21,6 +22,6 @@ export class CharacterCard extends Component<Props> {
           </div>
         </div>
       </article>
-    );
-  }
-}
+    </Link>
+  );
+};

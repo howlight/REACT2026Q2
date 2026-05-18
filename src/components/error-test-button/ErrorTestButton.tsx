@@ -1,31 +1,21 @@
 import './ErrorTestButton.css';
 
-import { Component } from 'react';
+import { useState } from 'react';
 
-type State = {
-  shouldThrowError: boolean;
-};
+export const ErrorTestButton = () => {
+  const [shouldThrowError, setShouldThrowError] = useState(false);
 
-export class ErrorTestButton extends Component<Record<string, never>, State> {
-  state = {
-    shouldThrowError: false,
+  const handleTestError = () => {
+    setShouldThrowError(true);
   };
 
-  private handleTestError = (): void => {
-    this.setState({ shouldThrowError: true });
-  };
-
-  render() {
-    const { shouldThrowError } = this.state;
-
-    if (shouldThrowError) {
-      throw new Error('Test error triggered by user!');
-    }
-
-    return (
-      <button className="error-test-button" onClick={this.handleTestError} type="button">
-        Test Error Boundary
-      </button>
-    );
+  if (shouldThrowError) {
+    throw new Error('Test error triggered by user!');
   }
-}
+
+  return (
+    <button className="error-test-button" onClick={handleTestError} type="button">
+      Test Error Boundary
+    </button>
+  );
+};
