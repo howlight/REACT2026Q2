@@ -1,14 +1,19 @@
 import { API_URLS, ERROR_MESSAGES } from './rick-morty.constants';
-import { type Character, isApiResponse, isCharacterArray } from './rick-morty.types';
+import { type CharactersResponse, isApiResponse } from './rick-morty.types';
 
-export const getCharacters = async (searchTerm: string): Promise<Character[]> => {
+export const getCharacters = async (searchTerm: string, page = 1): Promise<CharactersResponse> => {
   const url = searchTerm
-    ? `${API_URLS.CHARACTERS_ENDPOINT}${API_URLS.SEARCH_QUERY}${encodeURIComponent(searchTerm)}`
-    : `${API_URLS.CHARACTERS_ENDPOINT}`;
+    ? `${API_URLS.CHARACTERS_ENDPOINT}?${API_URLS.PARAM_KEYS.NAME}=${encodeURIComponent(searchTerm)}&${API_URLS.PARAM_KEYS.PAGE}=${page}`
+    : `${API_URLS.CHARACTERS_ENDPOINT}?${API_URLS.PARAM_KEYS.PAGE}=${page}`;
 
   const response = await fetch(url);
 
-  if (response.status === 404) return [];
+  if (response.status === 404) {
+    return {
+      characters: [],
+      totalPages: 0,
+    };
+  }
 
   if (!response.ok) {
     if (response.status === 429) throw new Error(ERROR_MESSAGES.RATE_LIMIT);
@@ -19,8 +24,11 @@ export const getCharacters = async (searchTerm: string): Promise<Character[]> =>
 
   const data: unknown = await response.json();
 
-  if (isApiResponse(data) && isCharacterArray(data.results)) {
-    return data.results;
+  if (isApiResponse(data)) {
+    return {
+      characters: data.results,
+      totalPages: data.info.pages,
+    };
   }
 
   throw new Error(ERROR_MESSAGES.INVALID_DATA);

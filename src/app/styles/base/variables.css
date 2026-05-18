@@ -17,6 +17,8 @@
   --color-neutral-bg: rgb(226 227 229);
   --color-neutral-bg-30: rgb(226 227 229 / 0.3);
   --color-neutral-text: rgb(56 61 65);
+  --color-neutral-light-bg: rgb(248 249 250);
+  --color-neutral-light-border: rgb(222 226 230);
   --color-error-bg: rgb(220 53 69);
   --color-error-bg-hover: rgb(200 35 51);
   --color-error-text: rgb(220 53 69);

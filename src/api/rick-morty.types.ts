@@ -6,19 +6,56 @@ export type Character = {
   image: string;
 };
 
+export type CharactersResponse = {
+  characters: Character[];
+  totalPages: number;
+};
+
 export type ApiResponse = {
+  info: {
+    pages: number;
+  };
   results: Character[];
 };
 
-export const isApiResponse = (data: unknown): data is { results: unknown } =>
-  data !== null && typeof data === 'object' && 'results' in data;
+export const isCharacter = (data: unknown): data is Character => {
+  if (data === null || typeof data !== 'object') {
+    return false;
+  }
 
-export const isCharacterArray = (data: unknown): data is Character[] => {
-  if (!Array.isArray(data)) return false;
-  if (data.length === 0) return true;
-
-  const firstItem = data[0] as unknown;
   return (
-    firstItem !== null && typeof firstItem === 'object' && 'id' in firstItem && 'name' in firstItem
+    'id' in data &&
+    typeof data.id === 'number' &&
+    'name' in data &&
+    typeof data.name === 'string' &&
+    'status' in data &&
+    typeof data.status === 'string' &&
+    'species' in data &&
+    typeof data.species === 'string' &&
+    'image' in data &&
+    typeof data.image === 'string'
+  );
+};
+
+export const isCharacterArray = (data: unknown): data is Character[] =>
+  Array.isArray(data) && data.every(isCharacter);
+
+export const isApiResponse = (data: unknown): data is ApiResponse => {
+  if (data === null || typeof data !== 'object') {
+    return false;
+  }
+
+  if (!('info' in data) || !('results' in data)) {
+    return false;
+  }
+
+  const { info, results } = data;
+
+  return (
+    info !== null &&
+    typeof info === 'object' &&
+    'pages' in info &&
+    typeof info.pages === 'number' &&
+    isCharacterArray(results)
   );
 };
