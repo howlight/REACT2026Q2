@@ -1,24 +1,28 @@
 :root {
   --color-text: rgb(3 17 5);
   --color-background: rgb(242 253 245);
-  --color-primary: rgb(52 218 80);
+  --color-primary: rgb(37 199 64);
   --color-secondary: rgb(144 201 234);
   --color-accent: rgb(96 124 226);
-  --color-border: rgb(207 208 209);
+
+  --color-border: rgb(228 232 236);
+
   --color-surface: rgb(255 255 255);
 
-  --color-badge-bg: rgb(241 243 245);
   --color-badge-text: rgb(73 80 87);
+  --color-badge-bg: rgb(241 243 245);
+
+  --color-neutral-bg: rgb(226 227 229);
+  --color-neutral-bg-30: rgb(226 227 229 / 0.3);
+  --color-neutral-text: rgb(56 61 65);
+  --color-neutral-light-text: rgb(234 238 241);
+  --color-neutral-light-bg: rgb(248 249 250);
+  --color-neutral-light-border: rgb(222 226 230);
 
   --color-success-bg: rgb(212 237 218);
   --color-success-text: rgb(21 87 36);
   --color-danger-bg: rgb(248 215 218);
   --color-danger-text: rgb(114 28 36);
-  --color-neutral-bg: rgb(226 227 229);
-  --color-neutral-bg-30: rgb(226 227 229 / 0.3);
-  --color-neutral-text: rgb(56 61 65);
-  --color-neutral-light-bg: rgb(248 249 250);
-  --color-neutral-light-border: rgb(222 226 230);
   --color-error-bg: rgb(220 53 69);
   --color-error-bg-hover: rgb(200 35 51);
   --color-error-text: rgb(220 53 69);
@@ -31,4 +35,13 @@
   --shadow-button-hover: 0 4px 12px rgb(0 0 0 / 0.3);
 
   --font-primary: 'Montserrat', sans-serif;
+}
+
+[data-theme='dark'] {
+  --color-background: rgb(19 20 19);
+  --color-text: rgb(235 245 237);
+
+  --color-surface: #292c31;
+
+  --color-border: rgb(100 103 105);
 }

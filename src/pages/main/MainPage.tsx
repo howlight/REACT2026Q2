@@ -12,7 +12,7 @@ import { useLocalStorage } from '~/hooks/useLocalStorage';
 import { usePaginationParams } from '~/hooks/usePaginationParams';
 
 export const MainPage = () => {
-  const [searchTerm, setSearchTerm] = useLocalStorage('search', '');
+  const [searchTerm, setSearchTerm] = useLocalStorage<string>('search', '');
   const [lastSearchTerm, setLastSearchTerm] = useState(searchTerm);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(false);
