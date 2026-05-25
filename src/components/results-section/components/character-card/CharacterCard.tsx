@@ -16,7 +16,7 @@ export const CharacterCard = ({ id, name, image, status, species }: Props) => {
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
-    toggleSelected(id);
+    toggleSelected({ id, name, image, status, species });
   };
 
   return (

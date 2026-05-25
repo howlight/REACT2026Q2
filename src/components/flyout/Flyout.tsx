@@ -1,17 +1,18 @@
 import { useSelectedStore } from '~/app/store/useSelectedStore';
+import { downloadCharactersCsv } from '~/utils/downloadCsv';
 
 import styles from './Flyout.module.css';
 
 export const Flyout = () => {
-  const selectedIds = useSelectedStore((state) => state.selectedIds);
+  const selectedCharacters = useSelectedStore((state) => state.selectedCharacters);
   const unselectAll = useSelectedStore((state) => state.unselectAll);
 
-  const count = selectedIds.length;
+  const count = selectedCharacters.length;
 
   if (count === 0) return null;
 
   const handleDownload = () => {
-    console.log('Download selected items:', selectedIds);
+    downloadCharactersCsv(selectedCharacters);
   };
 
   return (

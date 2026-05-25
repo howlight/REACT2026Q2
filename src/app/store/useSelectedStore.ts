@@ -1,38 +1,41 @@
 import { create } from 'zustand';
 
+import type { Character } from '~/api/rick-morty.types';
+
 type SelectedStore = {
-  selectedIds: number[];
-  toggleSelected: (id: number) => void;
+  selectedCharacters: Character[];
+  toggleSelected: (character: Character) => void;
   unselectAll: VoidFunction;
   isSelected: (id: number) => boolean;
   getSelectedCount: () => number;
 };
 
 export const useSelectedStore = create<SelectedStore>((set, get) => ({
-  selectedIds: [],
+  selectedCharacters: [],
 
-  toggleSelected: (id) =>
+  toggleSelected: (character) =>
     set((state) => {
-      const isSelected = state.selectedIds.includes(id);
+      const isSelected = state.selectedCharacters.some((item) => item.id === character.id);
+
       return {
-        selectedIds: isSelected
-          ? state.selectedIds.filter((i) => i !== id)
-          : [...state.selectedIds, id],
+        selectedCharacters: isSelected
+          ? state.selectedCharacters.filter((item) => item.id !== character.id)
+          : [...state.selectedCharacters, character],
       };
     }),
 
   unselectAll: () =>
     set(() => ({
-      selectedIds: [],
+      selectedCharacters: [],
     })),
 
   isSelected: (id) => {
     const state = get();
-    return state.selectedIds.includes(id);
+    return state.selectedCharacters.some((item) => item.id === id);
   },
 
   getSelectedCount: () => {
     const state = get();
-    return state.selectedIds.length;
+    return state.selectedCharacters.length;
   },
 }));
