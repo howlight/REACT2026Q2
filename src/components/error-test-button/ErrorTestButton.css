@@ -11,7 +11,7 @@
   border-radius: 8px;
 
   font-size: 14px;
-  color: var(--color-surface);
+  color: var(--color-neutral-light-text);
 
   background-color: var(--color-error-bg);
   box-shadow: var(--shadow-button);

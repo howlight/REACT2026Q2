@@ -1,0 +1,21 @@
+.themeToggle {
+  cursor: pointer;
+
+  min-width: 95px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  color: var(--color-neutral-light-text);
+
+  background-color: var(--color-accent);
+
+  transition: all 0.3s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .themeToggle:hover {
+    opacity: 0.8;
+  }
+}

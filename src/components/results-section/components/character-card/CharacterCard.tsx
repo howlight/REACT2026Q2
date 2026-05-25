@@ -3,12 +3,22 @@ import './CharacterCard.css';
 import { Link, useSearchParams } from 'react-router';
 
 import type { Character } from '~/api/rick-morty.types';
+import { useAppStore } from '~/app/store';
+import { useIsSelected } from '~/app/store/selectors';
 
 type Props = Character;
 
 export const CharacterCard = ({ id, name, image, status, species }: Props) => {
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get('page') ?? '1';
+
+  const isSelected = useIsSelected(id);
+  const toggleSelected = useAppStore((state) => state.toggleSelected);
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+    toggleSelected({ id, name, image, status, species });
+  };
 
   return (
     <Link to={`/details/${id}?page=${currentPage}`}>
@@ -19,6 +29,16 @@ export const CharacterCard = ({ id, name, image, status, species }: Props) => {
           <div className="character-details">
             <span className={`status-badge status-${status.toLowerCase()}`}>{status}</span>
             <span className="species-badge">{species}</span>
+          </div>
+          <div>
+            <input
+              className="character-checkbox"
+              type="checkbox"
+              checked={isSelected}
+              onChange={handleCheckboxChange}
+              onClick={(e) => e.stopPropagation()}
+              aria-label={`Select ${name}`}
+            />
           </div>
         </div>
       </article>

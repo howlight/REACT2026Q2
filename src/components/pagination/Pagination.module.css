@@ -44,7 +44,7 @@
 @media (hover: hover) and (pointer: fine) {
   .paginationButton:hover:not(:disabled) {
     border-color: var(--color-accent);
-    color: var(--color-surface);
+    color: var(--color-neutral-light-text);
     background-color: var(--color-accent);
   }
 }

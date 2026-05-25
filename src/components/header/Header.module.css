@@ -1,7 +1,18 @@
+.headerContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
 .header {
   width: 100%;
-  padding: 20px 15px;
-  border: 1px solid var(--color-neutral-light-border);
+  padding: 15px;
+  border-bottom: 1px solid var(--color-border);
   background-color: var(--color-surface);
 }
 
@@ -12,5 +23,5 @@
   justify-content: center;
 
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-primary);
 }
