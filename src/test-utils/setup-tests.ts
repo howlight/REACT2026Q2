@@ -4,22 +4,21 @@ import { cleanup } from '@testing-library/react';
 import { afterEach, vi } from 'vitest';
 
 function createLocalStorageMock() {
-  let store: Record<string, string> = {};
+  const store = new Map<string, string>();
 
   return {
-    getItem: vi.fn((key: string): string | null => store[key] ?? null),
+    getItem: vi.fn((key: string): string | null => store.get(key) ?? null),
     setItem: vi.fn((key: string, value: string): void => {
-      store[key] = value;
+      store.set(key, value);
     }),
     removeItem: vi.fn((key: string): void => {
-      const { [key]: _, ...rest } = store;
-      store = rest;
+      store.delete(key);
     }),
     clear: vi.fn((): void => {
-      store = {};
+      store.clear();
     }),
     _reset: () => {
-      store = {};
+      store.clear();
     },
   };
 }

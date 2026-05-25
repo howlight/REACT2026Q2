@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, test } from 'vitest';
 
 import { mockCharacter } from '~/api/rick-morty.mock';
+import { useAppStore } from '~/app/store';
 
 import { CharacterCard } from './CharacterCard';
 
@@ -15,6 +17,10 @@ const renderCharacterCard = (character = mockCharacter) => {
 };
 
 describe('CharacterCard', () => {
+  beforeEach(() => {
+    useAppStore.setState({ selectedCharacters: [] });
+  });
+
   test('should render the character name', () => {
     renderCharacterCard();
 
@@ -52,5 +58,21 @@ describe('CharacterCard', () => {
 
     const statusBadge = screen.getByText(status);
     expect(statusBadge).toHaveClass(expectedClass);
+  });
+
+  test('should toggle selection on checkbox click', async () => {
+    renderCharacterCard();
+
+    const checkbox = screen.getByRole('checkbox');
+
+    expect(checkbox).not.toBeChecked();
+
+    await userEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
+    expect(useAppStore.getState().selectedCharacters).toHaveLength(1);
+
+    await userEvent.click(checkbox);
+    expect(checkbox).not.toBeChecked();
+    expect(useAppStore.getState().selectedCharacters).toHaveLength(0);
   });
 });
