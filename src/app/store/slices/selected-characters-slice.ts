@@ -1,16 +1,14 @@
-import { create } from 'zustand';
+import type { StateCreator } from 'zustand';
 
 import type { Character } from '~/api/rick-morty.types';
 
-type SelectedStore = {
+export type SelectedCharactersSlice = {
   selectedCharacters: Character[];
   toggleSelected: (character: Character) => void;
   unselectAll: VoidFunction;
-  isSelected: (id: number) => boolean;
-  getSelectedCount: () => number;
 };
 
-export const useSelectedStore = create<SelectedStore>((set, get) => ({
+export const createSelectedCharactersSlice: StateCreator<SelectedCharactersSlice> = (set) => ({
   selectedCharacters: [],
 
   toggleSelected: (character) =>
@@ -24,18 +22,5 @@ export const useSelectedStore = create<SelectedStore>((set, get) => ({
       };
     }),
 
-  unselectAll: () =>
-    set(() => ({
-      selectedCharacters: [],
-    })),
-
-  isSelected: (id) => {
-    const state = get();
-    return state.selectedCharacters.some((item) => item.id === id);
-  },
-
-  getSelectedCount: () => {
-    const state = get();
-    return state.selectedCharacters.length;
-  },
-}));
+  unselectAll: () => set({ selectedCharacters: [] }),
+});
