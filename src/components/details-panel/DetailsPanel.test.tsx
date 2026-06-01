@@ -1,9 +1,11 @@
+import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { describe, expect, test, vi } from 'vitest';
 
 import { getCharacterById } from '~/api/rick-morty.api';
 import { mockCharacter } from '~/api/rick-morty.mock';
+import { createTestQueryClient } from '~/test-utils/createTestQueryClient';
 
 import { DetailsPanel } from './DetailsPanel';
 
@@ -11,26 +13,31 @@ vi.mock('~/api/rick-morty.api');
 
 const mockGetCharacterById = vi.mocked(getCharacterById);
 
-const renderWithRouter = (initialEntries = ['/details/1']) =>
-  render(
-    <MemoryRouter initialEntries={initialEntries}>
-      <Routes>
-        <Route path="/details/:characterId" element={<DetailsPanel />} />
-        <Route path="/" element={<div>Home</div>} />
-      </Routes>
-    </MemoryRouter>,
+const renderDetailsPanel = (initialEntries = ['/details/1']) => {
+  const queryClient = createTestQueryClient();
+
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={initialEntries}>
+        <Routes>
+          <Route path="/details/:characterId" element={<DetailsPanel />} />
+          <Route path="/" element={<div>Home</div>} />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
+};
 
 describe('DetailsPanel', () => {
   test('should show loading state initially', () => {
-    renderWithRouter();
+    renderDetailsPanel();
 
     expect(screen.getByText('Loading character details...')).toBeInTheDocument();
   });
 
   test('should display character data after loading', async () => {
     mockGetCharacterById.mockResolvedValue(mockCharacter);
-    renderWithRouter();
+    renderDetailsPanel();
 
     await waitFor(() => {
       expect(screen.getByText(mockCharacter.name)).toBeInTheDocument();
@@ -41,7 +48,7 @@ describe('DetailsPanel', () => {
 
   test('should display error message on failure', async () => {
     mockGetCharacterById.mockRejectedValue(new Error('Failed to load'));
-    renderWithRouter();
+    renderDetailsPanel();
 
     await waitFor(() => {
       expect(screen.getByText('Failed to load')).toBeInTheDocument();
@@ -50,7 +57,7 @@ describe('DetailsPanel', () => {
 
   test('should close panel when close button is clicked', async () => {
     mockGetCharacterById.mockResolvedValue(mockCharacter);
-    renderWithRouter();
+    renderDetailsPanel();
 
     await waitFor(() => {
       expect(screen.getByText(mockCharacter.name)).toBeInTheDocument();
@@ -61,7 +68,7 @@ describe('DetailsPanel', () => {
   });
 
   test('should return null if no characterId', () => {
-    renderWithRouter(['/details/']);
+    renderDetailsPanel(['/details/']);
     expect(screen.queryByText('Loading character details...')).not.toBeInTheDocument();
   });
 });

@@ -39,10 +39,10 @@ describe('ResultsSection', () => {
 
   describe('when error', () => {
     test('should render error message', () => {
-      const errorMessage = 'Failed to load characters';
-      renderResultsSection({ error: errorMessage });
+      const error = new Error('Failed to load characters');
+      renderResultsSection({ error });
 
-      expect(screen.getByText(errorMessage)).toBeInTheDocument();
+      expect(screen.getByText('Failed to load characters')).toBeInTheDocument();
       expect(screen.getByText('❗')).toBeInTheDocument();
     });
   });

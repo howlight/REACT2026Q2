@@ -1,3 +1,4 @@
+import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
@@ -5,6 +6,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { getCharacters } from '~/api/rick-morty.api';
 import { mockCharactersResponse } from '~/api/rick-morty.mock';
+import { createTestQueryClient } from '~/test-utils/createTestQueryClient';
 
 import { MainPage } from './MainPage';
 
@@ -13,10 +15,14 @@ vi.mock('~/api/rick-morty.api');
 const mockGetCharacters = vi.mocked(getCharacters);
 
 const renderMainPage = () => {
-  render(
-    <MemoryRouter>
-      <MainPage />
-    </MemoryRouter>,
+  const queryClient = createTestQueryClient();
+
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>
+        <MainPage />
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
 };
 
