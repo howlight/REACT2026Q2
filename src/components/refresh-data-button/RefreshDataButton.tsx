@@ -15,7 +15,7 @@ export const RefreshDataButton = () => {
       onClick={handleDataRefresh}
       aria-label="Refresh all data"
     >
-      ⟳ Refetch
+      ⟳ Refresh Data
     </button>
   );
 };
