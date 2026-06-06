@@ -7,7 +7,7 @@ import { CharacterCard } from './components/character-card';
 export type Props = {
   characters: Character[];
   loading: boolean;
-  error: string | null;
+  error: Error | null;
 };
 
 export const ResultsSection = ({ characters, loading, error }: Props) => {
@@ -27,7 +27,7 @@ export const ResultsSection = ({ characters, loading, error }: Props) => {
       <section className="results">
         <div className="error-container">
           <div className="error-icon">❗</div>
-          <p className="error-message">{error}</p>
+          <p className="error-message">{error.message}</p>
         </div>
       </section>
     );

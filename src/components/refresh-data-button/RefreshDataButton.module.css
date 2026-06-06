@@ -1,0 +1,27 @@
+.refreshDataBtn {
+  cursor: pointer;
+
+  position: fixed;
+  z-index: 10000;
+  right: 15px;
+  bottom: 65px;
+
+  padding: 12px 20px;
+  border: none;
+  border-radius: 20px;
+
+  font-size: 14px;
+  color: var(--color-neutral-light-text);
+
+  background-color: var(--color-accent);
+  box-shadow: var(--shadow-button);
+
+  transition: all 0.2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .refreshDataBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-button-hover);
+  }
+}

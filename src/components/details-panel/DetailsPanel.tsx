@@ -1,38 +1,16 @@
-import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
-import { getCharacterById } from '~/api/rick-morty.api';
-import type { Character } from '~/api/rick-morty.types';
+import { useCharacter } from '~/api/rick-morty.hooks';
 
 import styles from './DetailsPanel.module.css';
 
 export const DetailsPanel = () => {
   const { characterId } = useParams<{ characterId: string }>();
-  const [character, setCharacter] = useState<Character | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get('page') ?? '1';
 
-  useEffect(() => {
-    const fetchCharacter = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const character = await getCharacterById(Number(characterId));
-        setCharacter(character);
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load character';
-        setError(errorMessage);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void fetchCharacter();
-  }, [characterId]);
+  const { data: character, isLoading, error } = useCharacter(Number(characterId));
 
   const handleClose = () => {
     void navigate(`/?page=${currentPage}`);
@@ -44,7 +22,7 @@ export const DetailsPanel = () => {
         ×
       </button>
 
-      {loading && (
+      {isLoading && (
         <div className={styles.detailsLoading}>
           <div className={styles.spinner}></div>
           <p>Loading character details...</p>
@@ -54,11 +32,11 @@ export const DetailsPanel = () => {
       {error && (
         <div className={styles.detailsError}>
           <span className={styles.errorIcon}>⚠️</span>
-          <p>{error}</p>
+          <p>{error.message}</p>
         </div>
       )}
 
-      {character && !loading && (
+      {character && !isLoading && (
         <div>
           <img src={character.image} alt={character.name} className={styles.detailsImage} />
           <h2 className={styles.detailsName}>{character.name}</h2>
