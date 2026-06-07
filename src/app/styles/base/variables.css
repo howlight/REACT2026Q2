@@ -7,6 +7,9 @@
 
   --color-surface: rgb(255 255 255);
 
+  --shadow-btn: 0 5px 15px rgb(0 0 0 / 0.2);
+  --shadow-section: 0 10px 30px rgb(0 0 0 / 0.1);
+
   --font-primary: 'Montserrat', sans-serif;
 }
 
