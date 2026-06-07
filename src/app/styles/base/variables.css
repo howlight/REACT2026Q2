@@ -1,0 +1,19 @@
+:root {
+  --color-text: rgb(4 8 11);
+  --color-background: rgb(248 251 253);
+  --color-primary: rgb(71 150 195);
+  --color-secondary: rgb(222 182 152);
+  --color-accent: rgb(161 207 107);
+
+  --color-surface: rgb(255 255 255);
+
+  --font-primary: 'Montserrat', sans-serif;
+}
+
+:root[data-theme='dark'] {
+  --color-text: rgb(244 248 251);
+  --color-background: rgb(2 6 8);
+  --color-primary: rgb(60 139 185);
+  --color-secondary: rgb(104 64 34);
+  --color-accent: rgb(100 146 47);
+}
