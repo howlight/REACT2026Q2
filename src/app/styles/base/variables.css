@@ -6,9 +6,12 @@
   --color-accent: rgb(161 207 107);
 
   --color-surface: rgb(255 255 255);
+  --color-backdrop: rgb(0 0 0 / 0.5);
+  --color-border: rgb(224 224 224);
 
   --shadow-btn: 0 5px 15px rgb(0 0 0 / 0.2);
   --shadow-section: 0 10px 30px rgb(0 0 0 / 0.1);
+  --shadow-modal: 0 10px 40px rgb(0 0 0 / 0.2);
 
   --font-primary: 'Montserrat', sans-serif;
 }
