@@ -1,0 +1,24 @@
+.submissions {
+  padding: 30px;
+  border-radius: 16px;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-section);
+}
+
+.submissions-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.submissions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.submissions-placeholder {
+  grid-column: 1 / -1;
+  padding: 40px;
+  text-align: center;
+  opacity: 0.5;
+}
