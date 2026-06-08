@@ -3,6 +3,8 @@ import './MainPage.css';
 import { useState } from 'react';
 
 import { Modal } from '~/components/modal';
+import { ReactHookForm } from '~/components/react-hook-form';
+import { UncontrolledForm } from '~/components/uncontrolled-form';
 
 import { FormControls } from './components/form-controls';
 import { PageIntro } from './components/page-intro';
@@ -22,9 +24,9 @@ export const MainPage = () => {
   const renderFormContent = () => {
     switch (activeForm) {
       case 'uncontrolled':
-        return <p>Uncontrolled Form</p>;
+        return <UncontrolledForm onClose={handleCloseModal} />;
       case 'rhf':
-        return <p>React Hook Form</p>;
+        return <ReactHookForm onClose={handleCloseModal} />;
       default:
         return null;
     }
