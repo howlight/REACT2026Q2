@@ -2,17 +2,29 @@ import '~/app/styles/components/Form.css';
 
 import { useForm } from 'react-hook-form';
 
+import { useImageUpload } from '~/hooks/useImageUpload';
+import { useSubmissionStore } from '~/store/submissionStore';
 import { type FormData } from '~/types';
 
+import { PasswordIndicator } from '../password-indicator';
+
 type Props = {
-  onClose: () => void;
+  onClose: VoidFunction;
 };
 
 export const ReactHookForm = ({ onClose }: Props) => {
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, watch } = useForm<FormData>();
+  const { imageBase64, imageError, handleImageUpload } = useImageUpload();
+
+  const countries = useSubmissionStore((state) => state.countries);
+  const password = watch('password');
 
   const onSubmit = (data: FormData) => {
-    console.log('React Hook Form Data:', data);
+    const formData = {
+      ...data,
+      image: imageBase64,
+    };
+    console.log('React Hook Form Data:', formData);
     onClose();
   };
 
@@ -68,6 +80,66 @@ export const ReactHookForm = ({ onClose }: Props) => {
             Female
           </label>
         </div>
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="rhf-image" className="label">
+          Profile Image (PNG/JPEG, max 2MB)
+        </label>
+        <input
+          className="form-input"
+          id="rhf-image"
+          type="file"
+          accept="image/png,image/jpeg"
+          onChange={(e) => void handleImageUpload(e)}
+        />
+        {imageError && <span className="error">{imageError}</span>}
+        {imageBase64 && <img src={imageBase64} alt="Preview" className="image-preview" />}
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="password" className="label">
+          Password
+        </label>
+        <input
+          className="form-input"
+          id="password"
+          type="password"
+          autoComplete="new-password"
+          {...register('password')}
+        />
+        <PasswordIndicator password={password} />
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="confirmPassword" className="label">
+          Confirm Password
+        </label>
+        <input
+          className="form-input"
+          id="confirmPassword"
+          type="password"
+          autoComplete="new-password"
+          {...register('confirmPassword')}
+        />
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="country" className="label">
+          Country
+        </label>
+        <input
+          className="form-input"
+          id="country"
+          list="countries-list"
+          autoComplete="off"
+          {...register('country')}
+        />
+        <datalist id="countries-list">
+          {countries.map((country) => (
+            <option key={country} value={country} />
+          ))}
+        </datalist>
       </div>
 
       <div className="form-field checkbox">
