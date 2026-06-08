@@ -62,15 +62,20 @@
   transition: background-color 0.3s;
 
   @media (hover: hover) and (pointer: fine) {
-    &:hover {
+    &:not(:disabled):hover {
       background-color: var(--color-accent);
     }
   }
 }
 
+.submit-btn:disabled {
+  cursor: default;
+  color: var(--color-text);
+  opacity: 0.4;
+}
+
 .cancel-btn {
   color: var(--color-surface);
-  opacity: 0.8;
   background-color: var(--color-secondary);
 }
 

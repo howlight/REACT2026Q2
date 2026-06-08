@@ -1,30 +1,50 @@
 import '~/app/styles/components/Form.css';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 import { useImageUpload } from '~/hooks/useImageUpload';
 import { useSubmissionStore } from '~/store/submissionStore';
-import { type FormData } from '~/types';
+import type { FormData } from '~/types';
+import { formSchema } from '~/utils/validation';
 
 import { PasswordIndicator } from '../password-indicator';
 
 type Props = {
-  onClose: VoidFunction;
+  onClose: () => void;
 };
 
 export const ReactHookForm = ({ onClose }: Props) => {
-  const { register, handleSubmit, watch } = useForm<FormData>();
-  const { imageBase64, imageError, handleImageUpload } = useImageUpload();
-
+  const addSubmission = useSubmissionStore((state) => state.addSubmission);
   const countries = useSubmissionStore((state) => state.countries);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid, isDirty },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    mode: 'onChange',
+    defaultValues: {
+      gender: '',
+      age: null,
+    },
+  });
+
+  const { imageBase64, imageError, handleImageUpload } = useImageUpload();
   const password = watch('password');
 
   const onSubmit = (data: FormData) => {
-    const formData = {
+    const submission = {
       ...data,
       image: imageBase64,
+      id: crypto.randomUUID(),
+      submittedAt: new Date(),
     };
-    console.log('React Hook Form Data:', formData);
+
+    console.log('React Hook Form Data:', submission);
+    addSubmission(submission);
     onClose();
   };
 
@@ -41,6 +61,7 @@ export const ReactHookForm = ({ onClose }: Props) => {
           autoComplete="name"
           {...register('name')}
         />
+        {errors.name && <span className="error">{errors.name.message}</span>}
       </div>
 
       <div className="form-field">
@@ -53,6 +74,7 @@ export const ReactHookForm = ({ onClose }: Props) => {
           type="number"
           {...register('age', { valueAsNumber: true })}
         />
+        {errors.age && <span className="error">{errors.age.message}</span>}
       </div>
 
       <div className="form-field">
@@ -66,6 +88,7 @@ export const ReactHookForm = ({ onClose }: Props) => {
           autoComplete="email"
           {...register('email')}
         />
+        {errors.email && <span className="error">{errors.email.message}</span>}
       </div>
 
       <div className="form-field">
@@ -80,20 +103,22 @@ export const ReactHookForm = ({ onClose }: Props) => {
             Female
           </label>
         </div>
+        {errors.gender && <span className="error">{errors.gender.message}</span>}
       </div>
 
       <div className="form-field">
-        <label htmlFor="rhf-image" className="label">
+        <label htmlFor="image" className="label">
           Profile Image (PNG/JPEG, max 2MB)
         </label>
         <input
           className="form-input"
-          id="rhf-image"
+          id="image"
           type="file"
           accept="image/png,image/jpeg"
           onChange={(e) => void handleImageUpload(e)}
         />
         {imageError && <span className="error">{imageError}</span>}
+        {errors.image && !imageBase64 && <span className="error">{errors.image.message}</span>}
         {imageBase64 && <img src={imageBase64} alt="Preview" className="image-preview" />}
       </div>
 
@@ -109,6 +134,7 @@ export const ReactHookForm = ({ onClose }: Props) => {
           {...register('password')}
         />
         <PasswordIndicator password={password} />
+        {errors.password && <span className="error">{errors.password.message}</span>}
       </div>
 
       <div className="form-field">
@@ -122,6 +148,7 @@ export const ReactHookForm = ({ onClose }: Props) => {
           autoComplete="new-password"
           {...register('confirmPassword')}
         />
+        {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
       </div>
 
       <div className="form-field">
@@ -140,6 +167,7 @@ export const ReactHookForm = ({ onClose }: Props) => {
             <option key={country} value={country} />
           ))}
         </datalist>
+        {errors.country && <span className="error">{errors.country.message}</span>}
       </div>
 
       <div className="form-field checkbox">
@@ -147,10 +175,11 @@ export const ReactHookForm = ({ onClose }: Props) => {
           <input id="terms" type="checkbox" {...register('termsAccepted')} />I accept the Terms and
           Conditions
         </label>
+        {errors.termsAccepted && <span className="error">{errors.termsAccepted.message}</span>}
       </div>
 
       <div className="button-group">
-        <button type="submit" className="form-btn submit-btn">
+        <button type="submit" className="form-btn submit-btn" disabled={!isValid || !isDirty}>
           Submit
         </button>
         <button type="button" className="form-btn cancel-btn" onClick={onClose}>
