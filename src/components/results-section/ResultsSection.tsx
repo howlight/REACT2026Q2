@@ -1,8 +1,7 @@
-import './ResultsSection.css';
-
 import type { Character } from '~/api/rick-morty.types';
 
 import { CharacterCard } from './components/character-card';
+import styles from './ResultsSection.module.css';
 
 export type Props = {
   characters: Character[];
@@ -10,13 +9,13 @@ export type Props = {
   error: Error | null;
 };
 
-export const ResultsSection = ({ characters, loading, error }: Props) => {
+export function ResultsSection({ characters, loading, error }: Props) {
   if (loading) {
     return (
-      <section className="results">
-        <div className="loading-container">
-          <div className="spinner" role="status" />
-          <p className="loading-text">Loading characters...</p>
+      <section className={styles.results}>
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner} role="status" />
+          <p className={styles.loadingText}>Loading characters...</p>
         </div>
       </section>
     );
@@ -24,10 +23,10 @@ export const ResultsSection = ({ characters, loading, error }: Props) => {
 
   if (error) {
     return (
-      <section className="results">
-        <div className="error-container">
-          <div className="error-icon">❗</div>
-          <p className="error-message">{error.message}</p>
+      <section className={styles.results}>
+        <div className={styles.errorContainer}>
+          <div className={styles.errorIcon}>❗</div>
+          <p className={styles.errorMessage}>{error.message}</p>
         </div>
       </section>
     );
@@ -35,19 +34,19 @@ export const ResultsSection = ({ characters, loading, error }: Props) => {
 
   if (characters.length === 0) {
     return (
-      <section className="results">
-        <p className="no-results">No results found for your search.</p>
+      <section className={styles.results}>
+        <p className={styles.noResults}>No results found for your search.</p>
       </section>
     );
   }
 
   return (
-    <section className="results">
-      <div className="characters-grid">
+    <section className={styles.results}>
+      <div className={styles.charactersGrid}>
         {characters.map((character) => (
           <CharacterCard key={character.id} {...character} />
         ))}
       </div>
     </section>
   );
-};
+}

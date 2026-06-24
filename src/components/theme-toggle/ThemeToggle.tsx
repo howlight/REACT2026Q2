@@ -1,8 +1,8 @@
-import { useTheme } from '~/app/providers/theme/useTheme';
+import { useTheme } from '~/providers/theme/useTheme';
 
 import styles from './ThemeToggle.module.css';
 
-export const ThemeToggle = () => {
+export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -10,4 +10,4 @@ export const ThemeToggle = () => {
       {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
     </button>
   );
-};
+}

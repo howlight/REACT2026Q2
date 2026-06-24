@@ -1,10 +1,12 @@
-import { useAppStore } from '~/app/store';
-import { useSelectedCharacters, useSelectedCount } from '~/app/store/selectors';
+'use client';
+
+import { useAppStore } from '~/store';
+import { useSelectedCharacters, useSelectedCount } from '~/store/selectors';
 import { downloadCharactersCsv } from '~/utils/downloadCsv';
 
 import styles from './Flyout.module.css';
 
-export const Flyout = () => {
+export function Flyout() {
   const selectedCharacters = useSelectedCharacters();
   const count = useSelectedCount();
   const unselectAll = useAppStore((state) => state.unselectAll);
@@ -34,4 +36,4 @@ export const Flyout = () => {
       </div>
     </div>
   );
-};
+}

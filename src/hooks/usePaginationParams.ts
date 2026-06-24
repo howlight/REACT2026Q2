@@ -1,20 +1,32 @@
-import { useSearchParams } from 'react-router';
+'use client';
+
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const DEFAULT_PAGE = 1;
 
 export const usePaginationParams = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const pageParam = Number(searchParams.get('page'));
 
   const currentPage = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : DEFAULT_PAGE;
 
   const setPage = (page: number) => {
-    setSearchParams({ page: String(page) });
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('page', String(page));
+
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const resetPage = () => {
-    setSearchParams({ page: String(DEFAULT_PAGE) });
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('page', String(DEFAULT_PAGE));
+
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return {

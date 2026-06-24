@@ -9,7 +9,7 @@ import globals from 'globals';
 
 export default tseslint.config(
   {
-    ignores: ['**/node_modules', '**/dist', '*.config.*'],
+    ignores: ['**/node_modules', '**/.next', '**/dist', '*.config.*'],
   },
 
   eslint.configs.recommended,
@@ -23,7 +23,10 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'],
 
     languageOptions: {
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
@@ -53,10 +56,11 @@ export default tseslint.config(
       'react/function-component-definition': [
         'error',
         {
-          namedComponents: 'arrow-function',
+          namedComponents: 'function-declaration',
+          unnamedComponents: 'arrow-function',
         },
       ],
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react-refresh/only-export-components': 'off',
 
       // import sort
       'simple-import-sort/imports': 'error',

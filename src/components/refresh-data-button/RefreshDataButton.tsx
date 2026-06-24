@@ -1,8 +1,10 @@
+'use client';
+
 import { useQueryClient } from '@tanstack/react-query';
 
 import styles from './RefreshDataButton.module.css';
 
-export const RefreshDataButton = () => {
+export function RefreshDataButton() {
   const queryClient = useQueryClient();
 
   const handleDataRefresh = () => {
@@ -18,4 +20,4 @@ export const RefreshDataButton = () => {
       ⟳ Refresh Data
     </button>
   );
-};
+}

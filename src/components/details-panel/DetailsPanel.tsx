@@ -1,19 +1,24 @@
-import { useNavigate, useParams, useSearchParams } from 'react-router';
+'use client';
+
+import { useRouter } from 'next/navigation';
 
 import { useCharacter } from '~/api/rick-morty.hooks';
 
 import styles from './DetailsPanel.module.css';
 
-export const DetailsPanel = () => {
-  const { characterId } = useParams<{ characterId: string }>();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const currentPage = searchParams.get('page') ?? '1';
+type Props = {
+  characterId: string;
+  currentPage: string;
+};
+
+export function DetailsPanel({ characterId, currentPage }: Props) {
+  console.log(characterId);
+  const router = useRouter();
 
   const { data: character, isLoading, error } = useCharacter(Number(characterId));
 
   const handleClose = () => {
-    void navigate(`/?page=${currentPage}`);
+    router.push(`/?page=${currentPage}`);
   };
 
   return (
@@ -44,18 +49,18 @@ export const DetailsPanel = () => {
           <div className={styles.detailsInfo}>
             <div className={styles.detailsRow}>
               <span className={styles.detailsLabel}>Status:</span>
-              <span className={`${styles.statusBadge} status-${character.status.toLowerCase()}`}>
+              <span className={`status-badge status-${character.status.toLowerCase()}`}>
                 {character.status}
               </span>
             </div>
 
             <div className={styles.detailsRow}>
               <span className={styles.detailsLabel}>Species:</span>
-              <span>{character.species}</span>
+              <span className="species-badge">{character.species}</span>
             </div>
           </div>
         </div>
       )}
     </aside>
   );
-};
+}

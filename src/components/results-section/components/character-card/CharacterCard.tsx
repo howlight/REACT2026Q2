@@ -1,15 +1,19 @@
-import './CharacterCard.css';
+'use client';
 
-import { Link, useSearchParams } from 'react-router';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 import type { Character } from '~/api/rick-morty.types';
-import { useAppStore } from '~/app/store';
-import { useIsSelected } from '~/app/store/selectors';
+import { useAppStore } from '~/store';
+import { useIsSelected } from '~/store/selectors';
+
+import styles from './CharacterCard.module.css';
 
 type Props = Character;
 
-export const CharacterCard = ({ id, name, image, status, species }: Props) => {
-  const [searchParams] = useSearchParams();
+export function CharacterCard({ id, name, image, status, species }: Props) {
+  const searchParams = useSearchParams();
   const currentPage = searchParams.get('page') ?? '1';
 
   const isSelected = useIsSelected(id);
@@ -21,18 +25,25 @@ export const CharacterCard = ({ id, name, image, status, species }: Props) => {
   };
 
   return (
-    <Link to={`/details/${id}?page=${currentPage}`}>
-      <article className="character-card">
-        <img src={image} alt={name} className="character-image" loading="lazy" />
-        <div className="character-info">
-          <h3 className="character-name">{name}</h3>
-          <div className="character-details">
-            <span className={`status-badge status-${status.toLowerCase()}`}>{status}</span>
+    <Link href={`/details/${id}?page=${currentPage}`}>
+      <article className={styles.characterCard}>
+        <Image
+          src={image}
+          alt={name}
+          className={styles.characterImage}
+          width={300}
+          height={300}
+          loading="eager"
+        />
+        <div className={styles.characterInfo}>
+          <h3 className={styles.characterName}>{name}</h3>
+          <div className={styles.characterDetails}>
+            <span className={`status-badge status-${status.toLocaleLowerCase()}`}>{status}</span>
             <span className="species-badge">{species}</span>
           </div>
           <div>
             <input
-              className="character-checkbox"
+              className={styles.characterCheckbox}
               type="checkbox"
               checked={isSelected}
               onChange={handleCheckboxChange}
@@ -44,4 +55,4 @@ export const CharacterCard = ({ id, name, image, status, species }: Props) => {
       </article>
     </Link>
   );
-};
+}

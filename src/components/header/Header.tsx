@@ -1,19 +1,22 @@
-import { NavLink } from 'react-router';
+'use client';
 
-import logo from '~/app/assets/img/logo.webp';
+import Image from 'next/image';
+import Link from 'next/link';
 
 import { ThemeToggle } from '../theme-toggle';
 import styles from './Header.module.css';
 
-export const Header = () => (
-  <header className={styles.header}>
-    <div className={styles.headerContainer}>
-      <nav className={styles.nav}>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/about">About</NavLink>
-      </nav>
-      <img src={logo} alt="Logotype Rick & Morty" width="200" height="61" />
-      <ThemeToggle />
-    </div>
-  </header>
-);
+export function Header() {
+  return (
+    <header className={styles.header}>
+      <div className={styles.headerContainer}>
+        <nav className={styles.nav}>
+          <Link href="/">Home</Link>
+          <Link href="/about">About</Link>
+        </nav>
+        <Image src="/img/logo.webp" alt="Logotype Rick & Morty" width={200} height={61} priority />
+        <ThemeToggle />
+      </div>
+    </header>
+  );
+}
