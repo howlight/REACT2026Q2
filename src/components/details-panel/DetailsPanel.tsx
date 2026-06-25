@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { useCharacter } from '~/api/rick-morty.hooks';
@@ -43,7 +44,13 @@ export function DetailsPanel({ characterId, currentPage }: Props) {
 
       {character && !isLoading && (
         <div>
-          <img src={character.image} alt={character.name} className={styles.detailsImage} />
+          <Image
+            src={character.image}
+            alt={character.name}
+            className={styles.detailsImage}
+            width={250}
+            height={250}
+          />
           <h2 className={styles.detailsName}>{character.name}</h2>
 
           <div className={styles.detailsInfo}>

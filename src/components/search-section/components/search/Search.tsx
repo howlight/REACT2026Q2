@@ -28,7 +28,7 @@ export function Search({ value, onChange, onSubmit }: SearchProps) {
       <button className={styles.searchButton} aria-label="search items" type="submit">
         <Image
           className={styles.searchIcon}
-          src="./img/loupe.svg"
+          src="/img/loupe.svg"
           alt="search"
           width={25}
           height={25}
