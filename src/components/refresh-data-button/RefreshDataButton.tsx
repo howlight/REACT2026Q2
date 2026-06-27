@@ -1,10 +1,12 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 
 import styles from './RefreshDataButton.module.css';
 
 export function RefreshDataButton() {
+  const t = useTranslations('RefreshButton');
   const queryClient = useQueryClient();
 
   const handleDataRefresh = () => {
@@ -15,9 +17,9 @@ export function RefreshDataButton() {
     <button
       className={styles.refreshDataBtn}
       onClick={handleDataRefresh}
-      aria-label="Refresh all data"
+      aria-label={t('ariaLabel')}
     >
-      ⟳ Refresh Data
+      {t('refresh')}
     </button>
   );
 }

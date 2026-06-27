@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 import type { Character } from '~/api/rick-morty.types';
+import { Link } from '~/i18n/navigation';
 import { useAppStore } from '~/store';
 import { useIsSelected } from '~/store/selectors';
 

@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import type { Character } from '~/api/rick-morty.types';
 
 import { CharacterCard } from './components/character-card';
@@ -10,12 +12,14 @@ export type Props = {
 };
 
 export function ResultsSection({ characters, loading, error }: Props) {
+  const t = useTranslations('Results');
+
   if (loading) {
     return (
       <section className={styles.results}>
         <div className={styles.loadingContainer}>
           <div className={styles.spinner} role="status" />
-          <p className={styles.loadingText}>Loading characters...</p>
+          <p className={styles.loadingText}>{t('loading')}</p>
         </div>
       </section>
     );
@@ -35,7 +39,7 @@ export function ResultsSection({ characters, loading, error }: Props) {
   if (characters.length === 0) {
     return (
       <section className={styles.results}>
-        <p className={styles.noResults}>No results found for your search.</p>
+        <p className={styles.noResults}>{t('noResults')}</p>
       </section>
     );
   }

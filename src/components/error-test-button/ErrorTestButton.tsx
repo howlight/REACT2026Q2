@@ -1,10 +1,11 @@
 'use client';
-
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import styles from './ErrorTestButton.module.css';
 
 export function ErrorTestButton() {
+  const t = useTranslations('ErrorTestButton');
   const [shouldThrowError, setShouldThrowError] = useState(false);
 
   const handleTestError = () => {
@@ -17,7 +18,7 @@ export function ErrorTestButton() {
 
   return (
     <button className={styles.errorTestButton} onClick={handleTestError} type="button">
-      Test Error Boundary
+      {t('test')}
     </button>
   );
 }

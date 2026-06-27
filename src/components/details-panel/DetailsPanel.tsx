@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { useCharacter } from '~/api/rick-morty.hooks';
 
@@ -13,7 +14,6 @@ type Props = {
 };
 
 export function DetailsPanel({ characterId, currentPage }: Props) {
-  console.log(characterId);
   const router = useRouter();
 
   const { data: character, isLoading, error } = useCharacter(Number(characterId));
@@ -22,16 +22,18 @@ export function DetailsPanel({ characterId, currentPage }: Props) {
     router.push(`/?page=${currentPage}`);
   };
 
+  const t = useTranslations('DetailsPanel');
+
   return (
     <aside className={styles.detailsPanel}>
-      <button className={styles.detailsClose} onClick={handleClose} aria-label="Close details">
+      <button className={styles.detailsClose} onClick={handleClose} aria-label={t('close')}>
         ×
       </button>
 
       {isLoading && (
         <div className={styles.detailsLoading}>
           <div className={styles.spinner}></div>
-          <p>Loading character details...</p>
+          <p>{t('loading')}</p>
         </div>
       )}
 
@@ -55,14 +57,14 @@ export function DetailsPanel({ characterId, currentPage }: Props) {
 
           <div className={styles.detailsInfo}>
             <div className={styles.detailsRow}>
-              <span className={styles.detailsLabel}>Status:</span>
+              <span className={styles.detailsLabel}>{t('status')}</span>
               <span className={`status-badge status-${character.status.toLowerCase()}`}>
                 {character.status}
               </span>
             </div>
 
             <div className={styles.detailsRow}>
-              <span className={styles.detailsLabel}>Species:</span>
+              <span className={styles.detailsLabel}>{t('species')}</span>
               <span className="species-badge">{character.species}</span>
             </div>
           </div>

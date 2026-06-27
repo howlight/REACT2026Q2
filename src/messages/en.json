@@ -1,0 +1,50 @@
+{
+  "Header": {
+    "home": "Home",
+    "about": "About"
+  },
+  "Search": {
+    "placeholder": "Enter the character's name"
+  },
+  "Results": {
+    "loading": "Loading characters...",
+    "noResults": "No results found for your search."
+  },
+  "DetailsPanel": {
+    "close": "Close details",
+    "loading": "Loading character details...",
+    "status": "Status",
+    "species": "Species"
+  },
+  "Pagination": {
+    "prev": "Prev",
+    "next": "Next",
+    "page": "Page {currentPage} of {totalPages}"
+  },
+  "Flyout": {
+    "selected": "{count, plural, one {selected} other {selected}}",
+    "unselect": "Unselect all",
+    "download": "Download CSV"
+  },
+  "RefreshButton": {
+    "refresh": "⟳ Refresh Data",
+    "ariaLabel": "Refresh all data"
+  },
+  "ErrorTestButton": {
+    "test": "Test Error Boundary"
+  },
+  "About": {
+    "title": "About",
+    "author": "Author",
+    "course": "RS School React Course",
+    "back": "Back to Home"
+  },
+  "NotFound": {
+    "description": "Page not found",
+    "goHome": "Go Home"
+  },
+  "ThemeToggle": {
+    "dark": "🌙 Dark",
+    "light": "☀️ Light"
+  }
+}

@@ -1,10 +1,15 @@
+'use client';
+
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import type { ChangeEvent, FormEvent } from 'react';
 
 import styles from './Search.module.css';
 import type { SearchProps } from './types';
 
 export function Search({ value, onChange, onSubmit }: SearchProps) {
+  const t = useTranslations('Search');
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
@@ -22,7 +27,7 @@ export function Search({ value, onChange, onSubmit }: SearchProps) {
         onChange={handleChange}
         type="text"
         name="search"
-        placeholder="Enter search term..."
+        placeholder={t('placeholder')}
         aria-label="Search query"
       />
       <button className={styles.searchButton} aria-label="search items" type="submit">

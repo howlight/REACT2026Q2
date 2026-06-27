@@ -1,0 +1,50 @@
+{
+  "Header": {
+    "home": "Главная",
+    "about": "О проекте"
+  },
+  "Search": {
+    "placeholder": "Введите имя персонажа"
+  },
+  "Results": {
+    "loading": "Загрузка персонажей...",
+    "noResults": "Результаты по вашему запросу не найдены."
+  },
+  "DetailsPanel": {
+    "close": "Закрыть подробности",
+    "loading": "Загрузка данных о персонаже...",
+    "status": "Статус",
+    "species": "Вид"
+  },
+  "Pagination": {
+    "prev": "Назад",
+    "next": "Вперед",
+    "page": "Страница {currentPage} из {totalPages}"
+  },
+  "Flyout": {
+    "selected": "{count, plural, one {выбран} few {выбрано} other {выбрано}}",
+    "unselect": "Снять все",
+    "download": "Скачать CSV"
+  },
+  "RefreshButton": {
+    "refresh": "⟳ Обновить данные",
+    "ariaLabel": "Обновить все данные"
+  },
+  "ErrorTestButton": {
+    "test": "Тест ошибки"
+  },
+  "About": {
+    "title": "О проекте",
+    "author": "Автор",
+    "course": "Курс RS School React",
+    "back": "На главную"
+  },
+  "NotFound": {
+    "description": "Страница не найдена",
+    "goHome": "На главную"
+  },
+  "ThemeToggle": {
+    "dark": "🌙 Тёмная",
+    "light": "☀️ Светлая"
+  }
+}

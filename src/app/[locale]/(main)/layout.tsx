@@ -12,7 +12,7 @@ type Props = {
 
 export default function MainLayout({ children, details }: Props) {
   const pathname = usePathname();
-  const isDetailsOpened = pathname?.startsWith('/details/');
+  const isDetailsOpened = pathname?.includes('/details/');
 
   return (
     <div className={`${styles.mainPageLayout} ${isDetailsOpened ? styles.split : ''}`}>
