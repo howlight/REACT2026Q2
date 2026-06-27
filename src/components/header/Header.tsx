@@ -1,19 +1,28 @@
-import { NavLink } from 'react-router';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
-import logo from '~/app/assets/img/logo.webp';
+import { Link } from '~/i18n/navigation';
 
+import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import styles from './Header.module.css';
 
-export const Header = () => (
-  <header className={styles.header}>
-    <div className={styles.headerContainer}>
-      <nav className={styles.nav}>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/about">About</NavLink>
-      </nav>
-      <img src={logo} alt="Logotype Rick & Morty" width="200" height="61" />
-      <ThemeToggle />
-    </div>
-  </header>
-);
+export function Header() {
+  const t = useTranslations('Header');
+
+  return (
+    <header className={styles.header}>
+      <div className={styles.headerContainer}>
+        <nav className={styles.nav}>
+          <Link href="/">{t('home')}</Link>
+          <Link href="/about">{t('about')}</Link>
+        </nav>
+        <Image src="/img/logo.webp" alt="Logotype Rick & Morty" width={200} height={61} priority />
+        <div className={styles.actions}>
+          <ThemeToggle />
+          <LanguageSwitcher />
+        </div>
+      </div>
+    </header>
+  );
+}

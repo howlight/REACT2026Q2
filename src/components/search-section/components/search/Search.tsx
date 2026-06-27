@@ -1,11 +1,15 @@
-import './Search.css';
+'use client';
 
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import type { ChangeEvent, FormEvent } from 'react';
 
-import loupeIcon from './assets/loupe.svg';
+import styles from './Search.module.css';
 import type { SearchProps } from './types';
 
-export const Search = ({ value, onChange, onSubmit }: SearchProps) => {
+export function Search({ value, onChange, onSubmit }: SearchProps) {
+  const t = useTranslations('Search');
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
@@ -16,19 +20,25 @@ export const Search = ({ value, onChange, onSubmit }: SearchProps) => {
   };
 
   return (
-    <form className="search-form" onSubmit={handleSubmit}>
+    <form className={styles.searchForm} onSubmit={handleSubmit}>
       <input
-        className="search-input"
+        className={styles.searchInput}
         value={value}
         onChange={handleChange}
         type="text"
         name="search"
-        placeholder="Enter search term..."
+        placeholder={t('placeholder')}
         aria-label="Search query"
       />
-      <button className="search-button" aria-label="search items" type="submit">
-        <img className="search-icon" src={loupeIcon} alt="search" width="25" height="25" />
+      <button className={styles.searchButton} aria-label="search items" type="submit">
+        <Image
+          className={styles.searchIcon}
+          src="/img/loupe.svg"
+          alt="search"
+          width={25}
+          height={25}
+        />
       </button>
     </form>
   );
-};
+}

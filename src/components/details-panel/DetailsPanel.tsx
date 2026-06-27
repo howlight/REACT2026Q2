@@ -1,31 +1,39 @@
-import { useNavigate, useParams, useSearchParams } from 'react-router';
+'use client';
+
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { useCharacter } from '~/api/rick-morty.hooks';
 
 import styles from './DetailsPanel.module.css';
 
-export const DetailsPanel = () => {
-  const { characterId } = useParams<{ characterId: string }>();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const currentPage = searchParams.get('page') ?? '1';
+type Props = {
+  characterId: string;
+  currentPage: string;
+};
+
+export function DetailsPanel({ characterId, currentPage }: Props) {
+  const router = useRouter();
 
   const { data: character, isLoading, error } = useCharacter(Number(characterId));
 
   const handleClose = () => {
-    void navigate(`/?page=${currentPage}`);
+    router.push(`/?page=${currentPage}`);
   };
+
+  const t = useTranslations('DetailsPanel');
 
   return (
     <aside className={styles.detailsPanel}>
-      <button className={styles.detailsClose} onClick={handleClose} aria-label="Close details">
+      <button className={styles.detailsClose} onClick={handleClose} aria-label={t('close')}>
         ×
       </button>
 
       {isLoading && (
         <div className={styles.detailsLoading}>
           <div className={styles.spinner}></div>
-          <p>Loading character details...</p>
+          <p>{t('loading')}</p>
         </div>
       )}
 
@@ -38,24 +46,30 @@ export const DetailsPanel = () => {
 
       {character && !isLoading && (
         <div>
-          <img src={character.image} alt={character.name} className={styles.detailsImage} />
+          <Image
+            src={character.image}
+            alt={character.name}
+            className={styles.detailsImage}
+            width={250}
+            height={250}
+          />
           <h2 className={styles.detailsName}>{character.name}</h2>
 
           <div className={styles.detailsInfo}>
             <div className={styles.detailsRow}>
-              <span className={styles.detailsLabel}>Status:</span>
-              <span className={`${styles.statusBadge} status-${character.status.toLowerCase()}`}>
+              <span className={styles.detailsLabel}>{t('status')}</span>
+              <span className={`status-badge status-${character.status.toLowerCase()}`}>
                 {character.status}
               </span>
             </div>
 
             <div className={styles.detailsRow}>
-              <span className={styles.detailsLabel}>Species:</span>
-              <span>{character.species}</span>
+              <span className={styles.detailsLabel}>{t('species')}</span>
+              <span className="species-badge">{character.species}</span>
             </div>
           </div>
         </div>
       )}
     </aside>
   );
-};
+}

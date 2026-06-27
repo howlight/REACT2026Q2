@@ -1,0 +1,16 @@
+@import url('./lib/modern-normalize.css');
+@import url('./base/fonts.css');
+@import url('./base/variables.css');
+@import url('./base/settings.css');
+
+@import url('./ui/status.css');
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 1100px;
+  min-height: calc(100vh - 92px);
+  margin: 0 auto;
+  padding-inline: 15px;
+}

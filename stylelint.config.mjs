@@ -15,5 +15,6 @@ export default {
     '**/node_modules/**',
     '**/dist/**',
     '**/modern-normalize.css',
+    '**/.next/**',
   ],
 };

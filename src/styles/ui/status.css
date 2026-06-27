@@ -1,0 +1,37 @@
+.status-badge {
+  display: inline-block;
+
+  padding: 4px 12px;
+  border-radius: 20px;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-alive {
+  color: var(--color-success-text);
+  background-color: var(--color-success-bg);
+}
+
+.status-dead {
+  color: var(--color-danger-text);
+  background-color: var(--color-danger-bg);
+}
+
+.status-unknown {
+  color: var(--color-neutral-text);
+  background-color: var(--color-neutral-bg);
+}
+
+.species-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+
+  font-size: 14px;
+  color: var(--color-badge-text);
+  text-transform: capitalize;
+
+  background-color: var(--color-badge-bg);
+}

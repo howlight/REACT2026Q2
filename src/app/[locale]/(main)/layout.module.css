@@ -1,0 +1,42 @@
+.mainPageLayout {
+  display: block;
+}
+
+.mainPageLayout.split {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+}
+
+.mainPage {
+  display: grid;
+  grid-template-rows: auto auto auto;
+}
+
+.detailsWrapper {
+  position: sticky;
+  top: 20px;
+  animation: slide-in 0.4s ease;
+}
+
+@media (width < 769px) {
+  .mainPageLayout.split {
+    grid-template-columns: 1fr;
+  }
+
+  .detailsWrapper {
+    order: -1;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
